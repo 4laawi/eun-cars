@@ -7,25 +7,16 @@ import Image from 'next/image'
 interface FormErrors {
   location?: string
   pickupDate?: string
-  returnDate?: string
-  returnLocation?: string
 }
 
 interface BookingData {
   pickupDate: string
-  returnDate: string
   location: string
-  returnLocation: string
-  sameLocation: boolean
-  days: number
 }
 
 const HeroSection = () => {
   const [pickupDate, setPickupDate] = useState('')
-  const [returnDate, setReturnDate] = useState('')
   const [location, setLocation] = useState('')
-  const [sameLocation, setSameLocation] = useState(true)
-  const [returnLocation, setReturnLocation] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<FormErrors>({})
 
@@ -47,28 +38,8 @@ const HeroSection = () => {
       newErrors.pickupDate = 'Veuillez sélectionner une date de retrait'
     }
 
-    if (!returnDate) {
-      newErrors.returnDate = 'Veuillez sélectionner une date de retour'
-    }
-
-    if (pickupDate && returnDate && new Date(pickupDate) >= new Date(returnDate)) {
-      newErrors.returnDate = 'La date de retour doit être après la date de retrait'
-    }
-
-    if (!sameLocation && !returnLocation) {
-      newErrors.returnLocation = 'Veuillez sélectionner un bureau de retour'
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
-  }
-
-  const calculateDays = (startDate: string, endDate: string): number => {
-    const start = new Date(startDate)
-    const end = new Date(endDate)
-    const diffTime = Math.abs(end.getTime() - start.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,17 +51,10 @@ const HeroSection = () => {
 
     setIsSubmitting(true)
 
-    // Calculate days
-    const days = calculateDays(pickupDate, returnDate)
-
     // Create booking data
     const bookingData: BookingData = {
       pickupDate,
-      returnDate,
-      location,
-      returnLocation: sameLocation ? location : returnLocation,
-      sameLocation,
-      days
+      location
     }
 
     // Save to localStorage for vehicles section to access
@@ -122,20 +86,6 @@ const HeroSection = () => {
     setPickupDate(e.target.value)
     if (errors.pickupDate) {
       setErrors(prev => ({ ...prev, pickupDate: '' }))
-    }
-  }
-
-  const handleReturnDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReturnDate(e.target.value)
-    if (errors.returnDate) {
-      setErrors(prev => ({ ...prev, returnDate: '' }))
-    }
-  }
-
-  const handleReturnLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setReturnLocation(e.target.value)
-    if (errors.returnLocation) {
-      setErrors(prev => ({ ...prev, returnLocation: '' }))
     }
   }
 
@@ -277,88 +227,27 @@ const HeroSection = () => {
                   {errors.location && (
                     <p className="text-red-500 text-xs">{errors.location}</p>
                   )}
-
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="sameLocation"
-                      checked={sameLocation}
-                      onChange={(e) => setSameLocation(e.target.checked)}
-                      className="w-4 h-4 text-luxury-gold focus:ring-luxury-gold"
-                    />
-                    <label htmlFor="sameLocation" className="text-xs md:text-sm text-gray-600">
-                      Retour au même endroit
-                    </label>
-                  </div>
                 </div>
 
-                {/* Return Section */}
-                {!sameLocation && (
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="w-4 h-4 md:w-5 md:h-5 text-luxury-gold" />
-                      <h4 className="font-semibold text-luxury-blue text-sm md:text-base">REVENIR</h4>
-                    </div>
-                    
-                    <select 
-                      value={returnLocation}
-                      onChange={handleReturnLocationChange}
-                      className={`w-full p-3 md:p-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                        errors.returnLocation ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                    >
-                      <option value="">Choisissez un bureau</option>
-                      {locations.map((loc) => (
-                        <option key={loc} value={loc}>{loc}</option>
-                      ))}
-                    </select>
-                    {errors.returnLocation && (
-                      <p className="text-red-500 text-xs">{errors.returnLocation}</p>
-                    )}
-                  </div>
-                )}
-
                 {/* Date Selection */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs md:text-sm font-medium text-gray-700">
-                      Date du retrait
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
-                      <input
-                        type="date"
-                        value={pickupDate}
-                        onChange={handlePickupDateChange}
-                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                          errors.pickupDate ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                      />
-                    </div>
-                    {errors.pickupDate && (
-                      <p className="text-red-500 text-xs">{errors.pickupDate}</p>
-                    )}
+                <div className="space-y-2">
+                  <label className="text-xs md:text-sm font-medium text-gray-700">
+                    Date du retrait
+                  </label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                    <input
+                      type="date"
+                      value={pickupDate}
+                      onChange={handlePickupDateChange}
+                      className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
+                        errors.pickupDate ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                    />
                   </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-xs md:text-sm font-medium text-gray-700">
-                      Date de retour
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
-                      <input
-                        type="date"
-                        value={returnDate}
-                        onChange={handleReturnDateChange}
-                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                          errors.returnDate ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                      />
-                    </div>
-                    {errors.returnDate && (
-                      <p className="text-red-500 text-xs">{errors.returnDate}</p>
-                    )}
-                  </div>
+                  {errors.pickupDate && (
+                    <p className="text-red-500 text-xs">{errors.pickupDate}</p>
+                  )}
                 </div>
 
                 {/* Search Button */}
