@@ -20,6 +20,7 @@ interface Vehicle {
 
 interface BookingData {
   pickupDate: string
+  returnDate: string
   location: string
 }
 
@@ -123,13 +124,25 @@ const VehiclesSection = () => {
     setShowBookingModal(true)
   }
 
+  const calculateDays = (startDate: string, endDate: string): number => {
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const diffTime = Math.abs(end.getTime() - start.getTime())
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return diffDays
+  }
+
   const generateWhatsAppMessage = (vehicle: Vehicle) => {
     if (!bookingData) return ''
 
+    const days = calculateDays(bookingData.pickupDate, bookingData.returnDate)
+    const totalPrice = vehicle.price * days
     const message = `Bonjour! Je souhaite réserver:
 
 • ${vehicle.name}
-• Retrait: ${formatDate(bookingData.pickupDate)}
+• ${days} jours
+• ${totalPrice} MAD
+• Du ${formatDate(bookingData.pickupDate)} au ${formatDate(bookingData.returnDate)}
 • Lieu: ${bookingData.location}
 
 Pouvez-vous me confirmer la disponibilité?`
@@ -206,7 +219,7 @@ Pouvez-vous me confirmer la disponibilité?`
                     <span className="text-sm font-medium text-gray-700">Période</span>
                   </div>
                   <span className="text-sm font-semibold text-luxury-blue">
-                    {formatDate(bookingData.pickupDate)}
+                    {calculateDays(bookingData.pickupDate, bookingData.returnDate)} jours
                   </span>
                 </div>
                 
@@ -248,7 +261,8 @@ Pouvez-vous me confirmer la disponibilité?`
         {/* Vehicles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {vehicles.map((vehicle) => {
-                            const totalPrice = vehicle.price
+                            const days = bookingData ? calculateDays(bookingData.pickupDate, bookingData.returnDate) : 1
+                const totalPrice = vehicle.price * days
             
             return (
               <div
@@ -347,7 +361,7 @@ Pouvez-vous me confirmer la disponibilité?`
                         {bookingData ? `${totalPrice} MAD` : `${vehicle.price} MAD`}
                       </div>
                       <div className="text-sm text-gray-500 font-medium">
-                        par jour TTC
+                        {bookingData ? `pour ${calculateDays(bookingData.pickupDate, bookingData.returnDate)} jours` : 'par jour TTC'}
                       </div>
                     </div>
                     <button 
@@ -404,7 +418,7 @@ Pouvez-vous me confirmer la disponibilité?`
               <div className="text-sm text-gray-700 space-y-2">
                 <div className="flex justify-between">
                   <span>Durée:</span>
-                  <span className="font-semibold">Date de retrait</span>
+                  <span className="font-semibold">{calculateDays(bookingData.pickupDate, bookingData.returnDate)} jours</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Prix par jour:</span>
@@ -412,10 +426,10 @@ Pouvez-vous me confirmer la disponibilité?`
                 </div>
                 <div className="flex justify-between text-lg font-bold text-luxury-blue">
                   <span>Total:</span>
-                  <span>{selectedVehicle.price} MAD</span>
+                  <span>{selectedVehicle.price * calculateDays(bookingData.pickupDate, bookingData.returnDate)} MAD</span>
                 </div>
                 <div className="text-xs text-gray-500 mt-2">
-                  Retrait: {formatDate(bookingData.pickupDate)}
+                  Du {formatDate(bookingData.pickupDate)} au {formatDate(bookingData.returnDate)}
                 </div>
               </div>
             </div>

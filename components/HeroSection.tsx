@@ -7,15 +7,18 @@ import Image from 'next/image'
 interface FormErrors {
   location?: string
   pickupDate?: string
+  returnDate?: string
 }
 
 interface BookingData {
   pickupDate: string
+  returnDate: string
   location: string
 }
 
 const HeroSection = () => {
   const [pickupDate, setPickupDate] = useState('')
+  const [returnDate, setReturnDate] = useState('')
   const [location, setLocation] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<FormErrors>({})
@@ -38,6 +41,14 @@ const HeroSection = () => {
       newErrors.pickupDate = 'Veuillez sélectionner une date de retrait'
     }
 
+    if (!returnDate) {
+      newErrors.returnDate = 'Veuillez sélectionner une date de retour'
+    }
+
+    if (pickupDate && returnDate && new Date(pickupDate) >= new Date(returnDate)) {
+      newErrors.returnDate = 'La date de retour doit être après la date de retrait'
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -54,6 +65,7 @@ const HeroSection = () => {
     // Create booking data
     const bookingData: BookingData = {
       pickupDate,
+      returnDate,
       location
     }
 
@@ -86,6 +98,13 @@ const HeroSection = () => {
     setPickupDate(e.target.value)
     if (errors.pickupDate) {
       setErrors(prev => ({ ...prev, pickupDate: '' }))
+    }
+  }
+
+  const handleReturnDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReturnDate(e.target.value)
+    if (errors.returnDate) {
+      setErrors(prev => ({ ...prev, returnDate: '' }))
     }
   }
 
@@ -230,24 +249,46 @@ const HeroSection = () => {
                 </div>
 
                 {/* Date Selection */}
-                <div className="space-y-2">
-                  <label className="text-xs md:text-sm font-medium text-gray-700">
-                    Date du retrait
-                  </label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
-                    <input
-                      type="date"
-                      value={pickupDate}
-                      onChange={handlePickupDateChange}
-                      className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                        errors.pickupDate ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs md:text-sm font-medium text-gray-700">
+                      Date du retrait
+                    </label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                      <input
+                        type="date"
+                        value={pickupDate}
+                        onChange={handlePickupDateChange}
+                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
+                          errors.pickupDate ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      />
+                    </div>
+                    {errors.pickupDate && (
+                      <p className="text-red-500 text-xs">{errors.pickupDate}</p>
+                    )}
                   </div>
-                  {errors.pickupDate && (
-                    <p className="text-red-500 text-xs">{errors.pickupDate}</p>
-                  )}
+                  
+                  <div className="space-y-2">
+                    <label className="text-xs md:text-sm font-medium text-gray-700">
+                      Date de retour
+                    </label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                      <input
+                        type="date"
+                        value={returnDate}
+                        onChange={handleReturnDateChange}
+                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
+                          errors.returnDate ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      />
+                    </div>
+                    {errors.returnDate && (
+                      <p className="text-red-500 text-xs">{errors.returnDate}</p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Search Button */}
