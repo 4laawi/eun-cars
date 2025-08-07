@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logo/second-logo.png',
+        url: '/images/Logo/second-logo.png',
         width: 1200,
         height: 630,
         alt: 'EUN CARS - Location de Voiture à Laâyoune | كراء السيارات العيون',
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'EUN CARS - Location de Voiture à Laâyoune | كراء السيارات العيون',
     description: 'Location de voiture à Laâyoune. كراء السيارات في العيون. Flotte moderne, tarifs compétitifs, service 24/7.',
-    images: ['/images/logo/second-logo.png'],
+    images: ['/images/Logo/second-logo.png'],
   },
   robots: {
     index: true,
@@ -91,13 +91,15 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/images/logo/second-logo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/images/logo/second-logo.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [
-      { url: '/images/logo/second-logo.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
 }
@@ -190,6 +192,13 @@ export default function RootLayout({
         {/* DNS Prefetch for performance */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Favicon links for better browser support */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
         {children}
