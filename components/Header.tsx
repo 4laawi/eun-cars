@@ -24,7 +24,7 @@ const Header = () => {
             <a href="/" className="flex items-center space-x-2 md:space-x-3 hover:opacity-80 transition-opacity duration-300">
               <div className="relative w-10 h-10 md:w-12 md:h-12">
                 <Image
-                  src="/images/logo/second-logo.png"
+                  src="/images/Logo/second-logo.png"
                   alt="EUN CARS Logo"
                   fill
                   className="object-contain"
