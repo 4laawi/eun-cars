@@ -31,11 +31,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        {/* Preload critical resources */}
-        <link rel="preload" href="/images/cars2/renault-express.jpg" as="image" />
-        <link rel="preload" href="/images/cars2/jeep-compass.jpg" as="image" />
-        <link rel="preload" href="/images/cars2/clio5.jpg" as="image" />
-        
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="//wa.me" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

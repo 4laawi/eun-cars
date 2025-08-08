@@ -357,8 +357,7 @@ Pouvez-vous me confirmer la disponibilité?`
                       fill
                       className="object-contain group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority={vehicle.id <= 3}
-                      loading={vehicle.id <= 3 ? "eager" : "lazy"}
+                      loading="lazy"
                       quality={85}
                     />
                   </div>
