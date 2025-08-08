@@ -28,6 +28,7 @@ const VehiclesSection = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null)
   const [showBookingModal, setShowBookingModal] = useState(false)
   const [bookingData, setBookingData] = useState<BookingData | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
 
   const vehicles: Vehicle[] = [
     {
@@ -184,18 +185,26 @@ const VehiclesSection = () => {
     }
   ]
 
+  // Set mounted state
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Load booking data from localStorage on component mount
   useEffect(() => {
-    const savedBookingData = localStorage.getItem('bookingData')
-    if (savedBookingData) {
-      try {
+    if (!isMounted) return
+    
+    try {
+      const savedBookingData = localStorage.getItem('bookingData')
+      if (savedBookingData) {
         const parsedData = JSON.parse(savedBookingData)
         setBookingData(parsedData)
-      } catch (error) {
-        console.error('Error parsing booking data:', error)
+        console.log('Booking data loaded:', parsedData)
       }
+    } catch (error) {
+      console.error('Error loading booking data:', error)
     }
-  }, [])
+  }, [isMounted])
 
   const handleBooking = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle)

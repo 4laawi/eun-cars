@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Calendar, MapPin, Car, Search, Phone, Star, CheckCircle, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 
@@ -22,6 +22,12 @@ const HeroSection = () => {
   const [location, setLocation] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Set mounted state
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const locations = [
     'Bureau Central - Laayoune',
@@ -56,34 +62,50 @@ const HeroSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    if (!isMounted) {
+      console.error('Component not mounted yet')
+      return
+    }
+    
     if (!validateForm()) {
       return
     }
 
     setIsSubmitting(true)
 
-    // Create booking data
-    const bookingData: BookingData = {
-      pickupDate,
-      returnDate,
-      location
-    }
+    try {
+      // Create booking data
+      const bookingData: BookingData = {
+        pickupDate,
+        returnDate,
+        location
+      }
 
-    // Save to localStorage for vehicles section to access
-    localStorage.setItem('bookingData', JSON.stringify(bookingData))
+      // Save to localStorage for vehicles section to access
+      localStorage.setItem('bookingData', JSON.stringify(bookingData))
+      
+      console.log('Booking data saved:', bookingData)
 
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 500))
+      // Simulate processing time
+      await new Promise(resolve => setTimeout(resolve, 500))
 
-    setIsSubmitting(false)
+      setIsSubmitting(false)
 
-    // Smooth scroll to vehicles section
-    const vehiclesSection = document.getElementById('vehicles')
-    if (vehiclesSection) {
-      vehiclesSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      })
+      // Smooth scroll to vehicles section
+      const vehiclesSection = document.getElementById('vehicles')
+      if (vehiclesSection) {
+        vehiclesSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        })
+      } else {
+        console.error('Vehicles section not found')
+        // Fallback: scroll to top of page
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    } catch (error) {
+      console.error('Error in booking form:', error)
+      setIsSubmitting(false)
     }
   }
 
