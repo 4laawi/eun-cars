@@ -27,10 +27,10 @@ const TestimonialsSection = () => {
   ]
 
   const stats = [
-    { number: "5000+", label: "Clients Satisfaits" },
-    { number: "50+", label: "Véhicules Disponibles" },
+    { number: "850+", label: "Clients Satisfaits" },
+    { number: "12+", label: "Véhicules Disponibles" },
     { number: "24/7", label: "Assistance Client" },
-    { number: "4.9/5", label: "Note Moyenne" }
+    { number: "4.8/5", label: "Note Moyenne" }
   ]
 
   return (

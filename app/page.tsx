@@ -8,6 +8,10 @@ export const metadata: Metadata = {
 }
 
 // Dynamic imports for better performance
+const Header = dynamic(() => import('@/components/Header'), {
+  loading: () => <div className="fixed top-0 w-full h-16 bg-luxury-blue animate-pulse z-50" />
+})
+
 const HeroSection = dynamic(() => import('@/components/HeroSection'), {
   loading: () => <div className="h-screen bg-gradient-to-br from-luxury-blue to-luxury-gold animate-pulse" />
 })
@@ -31,6 +35,10 @@ const Footer = dynamic(() => import('@/components/Footer'), {
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <Suspense fallback={<div className="fixed top-0 w-full h-16 bg-luxury-blue animate-pulse z-50" />}>
+        <Header />
+      </Suspense>
+      
       <Suspense fallback={<div className="h-screen bg-gradient-to-br from-luxury-blue to-luxury-gold animate-pulse" />}>
         <HeroSection />
       </Suspense>
