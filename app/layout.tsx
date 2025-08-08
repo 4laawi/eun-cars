@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'Location de voitures au Maroc. Large gamme de véhicules: citadines, SUV, berlines. Réservation facile et prix compétitifs.',
   keywords: 'location voiture maroc, location auto maroc, voiture de location, EUN CARS',
   authors: [{ name: 'EUN CARS' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   openGraph: {
     title: 'EUN CARS - Location de Voitures au Maroc',
@@ -17,6 +16,11 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_FR',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({

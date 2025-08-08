@@ -17,7 +17,6 @@ const nextConfig = {
   
   // Optimize bundle size
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
   },
   

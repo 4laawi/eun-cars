@@ -2,6 +2,12 @@ import React from 'react'
 import { MapPin, Phone, Globe, Mail, Send, Building, Clock } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contact - EUN CARS',
+  description: 'Contactez EUN CARS pour la location de voitures au Maroc. Agence à Laâyoune, réservation par téléphone ou WhatsApp.',
+}
 
 const ContactPage = () => {
   return (

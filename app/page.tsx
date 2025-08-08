@@ -1,5 +1,11 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'EUN CARS - Location de Voitures au Maroc',
+  description: 'Location de voitures au Maroc. Large gamme de véhicules: citadines, SUV, berlines. Réservation facile et prix compétitifs.',
+}
 
 // Dynamic imports for better performance
 const HeroSection = dynamic(() => import('@/components/HeroSection'), {
