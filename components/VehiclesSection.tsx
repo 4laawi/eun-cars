@@ -32,6 +32,84 @@ const VehiclesSection = () => {
   const vehicles: Vehicle[] = [
     {
       id: 1,
+      name: "RENAULT EXPRESS",
+      type: "UTILITAIRE",
+      fuel: "DIESEL",
+      transmission: "MANUELLE",
+      image: "/images/cars2/renault-express.jpg",
+      seats: 9,
+      bags: 8,
+      doors: 5,
+      price: 450,
+      features: ["Espace", "Transport", "GPS", "Assurance"]
+    },
+    {
+      id: 2,
+      name: "JEEP COMPASS",
+      type: "SUV",
+      fuel: "ESSENCE",
+      transmission: "AUTOMATIQUE",
+      image: "/images/cars2/jeep-compass.jpg",
+      seats: 5,
+      bags: 5,
+      doors: 5,
+      price: 500,
+      features: ["4x4", "Américain", "GPS", "Assurance Premium"]
+    },
+    {
+      id: 3,
+      name: "RENAULT CLIO 5",
+      type: "CITADINE",
+      fuel: "ESSENCE",
+      transmission: "MANUELLE",
+      image: "/images/cars2/clio5.jpg",
+      seats: 5,
+      bags: 3,
+      doors: 5,
+      price: 320,
+      features: ["Moderne", "GPS", "Assurance", "Économique"]
+    },
+    {
+      id: 4,
+      name: "FORD FIESTA",
+      type: "CITADINE",
+      fuel: "ESSENCE",
+      transmission: "MANUELLE",
+      image: "/images/cars2/ford-fiesta.png",
+      seats: 5,
+      bags: 3,
+      doors: 5,
+      price: 310,
+      features: ["Fiable", "GPS", "Assurance", "Économique"]
+    },
+    {
+      id: 5,
+      name: "NISSAN QASHQAI",
+      type: "SUV",
+      fuel: "ESSENCE",
+      transmission: "AUTOMATIQUE",
+      image: "/images/cars2/Nissan-Qashqai.jpg",
+      seats: 5,
+      bags: 5,
+      doors: 5,
+      price: 480,
+      features: ["Crossover", "Moderne", "GPS", "Assurance"]
+    },
+    {
+      id: 6,
+      name: "RENAULT MEGANE",
+      type: "BERLINE",
+      fuel: "ESSENCE",
+      transmission: "MANUELLE",
+      image: "/images/cars2/megan-sedan.jpg",
+      seats: 5,
+      bags: 4,
+      doors: 4,
+      price: 380,
+      features: ["Confortable", "GPS", "Assurance", "Familiale"]
+    },
+    {
+      id: 7,
       name: "RENAULT CLIO 4",
       type: "CITADINE",
       fuel: "ESSENCE",
@@ -43,7 +121,7 @@ const VehiclesSection = () => {
       features: ["Climatisation", "GPS", "Assurance", "Économique"]
     },
     {
-      id: 2,
+      id: 8,
       name: "TOYOTA YARIS",
       type: "CITADINE",
       fuel: "ESSENCE",
@@ -55,7 +133,7 @@ const VehiclesSection = () => {
       features: ["Fiable", "GPS", "Assurance", "Économique"]
     },
     {
-      id: 3,
+      id: 9,
       name: "DACIA DUSTER",
       type: "SUV",
       fuel: "ESSENCE",
@@ -68,7 +146,7 @@ const VehiclesSection = () => {
       features: ["4x4", "GPS", "Assurance", "Tout-terrain"]
     },
     {
-      id: 4,
+      id: 10,
       name: "PEUGEOT 208",
       type: "CITADINE",
       fuel: "ESSENCE",
@@ -80,7 +158,7 @@ const VehiclesSection = () => {
       features: ["Moderne", "GPS", "Assurance", "Confortable"]
     },
     {
-      id: 5,
+      id: 11,
       name: "VW TOUAREG",
       type: "SUV PREMIUM",
       fuel: "DIESEL",
@@ -92,7 +170,7 @@ const VehiclesSection = () => {
       features: ["Luxe", "4x4", "GPS", "Assurance Premium"]
     },
     {
-      id: 6,
+      id: 12,
       name: "DACIA DUSTER 4x4",
       type: "SUV",
       fuel: "ESSENCE",

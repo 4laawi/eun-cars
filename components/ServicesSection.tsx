@@ -133,10 +133,24 @@ const ServicesSection = () => {
         </div>
 
         {/* Call to Action - Enhanced for mobile */}
-        <div className="text-center mt-6 md:mt-12">
-          <div className="inline-flex items-center space-x-3 md:space-x-4 bg-luxury-gold rounded-full px-6 md:px-8 py-3 md:py-4 text-luxury-blue font-semibold text-sm md:text-base">
-            <Phone className="w-4 h-4 md:w-5 md:h-5" />
-                            <span>Réservez maintenant : +212 657-821410</span>
+        <div className="text-center mt-8 md:mt-12">
+          <div className="card p-6 md:p-8 max-w-md mx-auto bg-gradient-to-r from-luxury-gold to-yellow-400 shadow-xl border-2 border-luxury-gold/20">
+            <div className="flex items-center justify-center space-x-3 md:space-x-4 mb-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-luxury-blue rounded-full flex items-center justify-center">
+                <Phone className="w-5 h-5 md:w-6 md:h-6 text-luxury-gold" />
+              </div>
+              <div>
+                <h4 className="text-lg md:text-xl font-bold text-luxury-blue">
+                  Réservez maintenant
+                </h4>
+                <p className="text-sm md:text-base text-luxury-blue font-semibold">
+                  +212 657-821410
+                </p>
+              </div>
+            </div>
+            <p className="text-xs md:text-sm text-luxury-blue/80 text-center">
+              Service disponible 24h/24 et 7j/7
+            </p>
           </div>
         </div>
       </div>
