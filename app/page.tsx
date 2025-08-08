@@ -1,20 +1,49 @@
-import React from 'react'
-import Header from '@/components/Header'
-import HeroSection from '@/components/HeroSection'
-import ServicesSection from '@/components/ServicesSection'
-import VehiclesSection from '@/components/VehiclesSection'
-import TestimonialsSection from '@/components/TestimonialsSection'
-import Footer from '@/components/Footer'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+
+// Dynamic imports for better performance
+const HeroSection = dynamic(() => import('@/components/HeroSection'), {
+  loading: () => <div className="h-screen bg-gradient-to-br from-luxury-blue to-luxury-gold animate-pulse" />
+})
+
+const ServicesSection = dynamic(() => import('@/components/ServicesSection'), {
+  loading: () => <div className="py-20 bg-white animate-pulse" />
+})
+
+const VehiclesSection = dynamic(() => import('@/components/VehiclesSection'), {
+  loading: () => <div className="py-20 bg-gray-100 animate-pulse" />
+})
+
+const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'), {
+  loading: () => <div className="py-20 bg-white animate-pulse" />
+})
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="bg-luxury-blue h-64 animate-pulse" />
+})
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Header />
-      <HeroSection />
-      <ServicesSection />
-      <VehiclesSection />
-      <TestimonialsSection />
-      <Footer />
+      <Suspense fallback={<div className="h-screen bg-gradient-to-br from-luxury-blue to-luxury-gold animate-pulse" />}>
+        <HeroSection />
+      </Suspense>
+      
+      <Suspense fallback={<div className="py-20 bg-white animate-pulse" />}>
+        <ServicesSection />
+      </Suspense>
+      
+      <Suspense fallback={<div className="py-20 bg-gray-100 animate-pulse" />}>
+        <VehiclesSection />
+      </Suspense>
+      
+      <Suspense fallback={<div className="py-20 bg-white animate-pulse" />}>
+        <TestimonialsSection />
+      </Suspense>
+      
+      <Suspense fallback={<div className="bg-luxury-blue h-64 animate-pulse" />}>
+        <Footer />
+      </Suspense>
     </main>
   )
 } 

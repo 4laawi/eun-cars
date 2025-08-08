@@ -339,8 +339,8 @@ Pouvez-vous me confirmer la disponibilité?`
         {/* Vehicles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {vehicles.map((vehicle) => {
-                            const days = bookingData ? calculateDays(bookingData.pickupDate, bookingData.returnDate) : 1
-                const totalPrice = vehicle.price * days
+            const days = bookingData ? calculateDays(bookingData.pickupDate, bookingData.returnDate) : 1
+            const totalPrice = vehicle.price * days
             
             return (
               <div
@@ -357,6 +357,9 @@ Pouvez-vous me confirmer la disponibilité?`
                       fill
                       className="object-contain group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={vehicle.id <= 3}
+                      loading={vehicle.id <= 3 ? "eager" : "lazy"}
+                      quality={85}
                     />
                   </div>
                   
@@ -554,4 +557,4 @@ Pouvez-vous me confirmer la disponibilité?`
   )
 }
 
-export default VehiclesSection 
+export default VehiclesSection
