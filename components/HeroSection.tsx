@@ -84,6 +84,9 @@ const HeroSection = () => {
       // Save to localStorage for vehicles section to access
       localStorage.setItem('bookingData', JSON.stringify(bookingData))
       
+      // Dispatch custom event to notify VehiclesSection in the same window
+      window.dispatchEvent(new Event('bookingDataUpdated'))
+      
       console.log('Booking data saved:', bookingData)
 
       // Simulate processing time

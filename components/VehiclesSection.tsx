@@ -185,24 +185,77 @@ const VehiclesSection = () => {
     }
   ]
 
-  // Set mounted state
+  // Set mounted state and clear old booking data on initial load
   useEffect(() => {
     setIsMounted(true)
+    
+    // Clear any old booking data from previous sessions
+    // This ensures the card only shows when user submits in current session
+    try {
+      localStorage.removeItem('bookingData')
+    } catch (error) {
+      console.error('Error clearing old booking data:', error)
+    }
   }, [])
 
   // Load booking data from localStorage on component mount
   useEffect(() => {
     if (!isMounted) return
     
-    try {
-      const savedBookingData = localStorage.getItem('bookingData')
-      if (savedBookingData) {
-        const parsedData = JSON.parse(savedBookingData)
-        setBookingData(parsedData)
-        console.log('Booking data loaded:', parsedData)
+    const loadBookingData = () => {
+      try {
+        const savedBookingData = localStorage.getItem('bookingData')
+        if (savedBookingData) {
+          const parsedData = JSON.parse(savedBookingData)
+          
+          // Validate the parsed data
+          if (parsedData.pickupDate && parsedData.returnDate && parsedData.location) {
+            // Check if dates are valid
+            const pickup = new Date(parsedData.pickupDate)
+            const returnDate = new Date(parsedData.returnDate)
+            
+            if (!isNaN(pickup.getTime()) && !isNaN(returnDate.getTime())) {
+              setBookingData(parsedData)
+              console.log('Booking data loaded:', parsedData)
+            } else {
+              console.log('Invalid dates in booking data, clearing...')
+              localStorage.removeItem('bookingData')
+              setBookingData(null)
+            }
+          } else {
+            console.log('Incomplete booking data, clearing...')
+            localStorage.removeItem('bookingData')
+            setBookingData(null)
+          }
+        }
+      } catch (error) {
+        console.error('Error loading booking data:', error)
+        localStorage.removeItem('bookingData')
+        setBookingData(null)
       }
-    } catch (error) {
-      console.error('Error loading booking data:', error)
+    }
+    
+    // Load initially
+    loadBookingData()
+    
+    // Listen for storage changes (from the hero section submission)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'bookingData') {
+        loadBookingData()
+      }
+    }
+    
+    // Listen for custom event (for same-window updates)
+    const handleBookingUpdate = () => {
+      loadBookingData()
+    }
+    
+    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('bookingDataUpdated', handleBookingUpdate)
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('bookingDataUpdated', handleBookingUpdate)
     }
   }, [isMounted])
 
@@ -212,9 +265,21 @@ const VehiclesSection = () => {
   }
 
   const calculateDays = (startDate: string, endDate: string): number => {
+    // Validate inputs
+    if (!startDate || !endDate) return 1
+    
     const start = new Date(startDate)
     const end = new Date(endDate)
-    const diffTime = Math.abs(end.getTime() - start.getTime())
+    
+    // Check for invalid dates
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return 1
+    
+    // Calculate difference (end should be after start)
+    const diffTime = end.getTime() - start.getTime()
+    
+    // If dates are the same or end is before start, return 1
+    if (diffTime <= 0) return 1
+    
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     return diffDays
   }
