@@ -290,7 +290,12 @@ const VehiclesSection = () => {
 
   const generateWhatsAppMessage = (vehicle: Vehicle) => {
     if (!bookingData) {
-      return encodeURIComponent(vehicle.name)
+      const message = `Bonjour! Je souhaite réserver la voiture suivante :
+
+• ${vehicle.name}
+
+Pouvez-vous me donner plus d'informations sur la disponibilité et les tarifs ? Merci !`
+      return encodeURIComponent(message)
     }
 
     const days = calculateDays(bookingData.pickupDate, bookingData.returnDate)
