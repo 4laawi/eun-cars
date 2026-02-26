@@ -155,7 +155,7 @@ const VehiclesSection = () => {
       seats: 5,
       bags: 5,
       doors: 5,
-      price: 350,
+      price: 400,
       features: ["4x4", "GPS", "Assurance", "Tout-terrain"]
     },
     {
@@ -172,23 +172,23 @@ const VehiclesSection = () => {
     },
     {
       id: 12,
-      name: "DACIA DUSTER 4x4",
-      type: "SUV",
+      name: "Dacia logan",
+      type: "BERLINE",
       fuel: "ESSENCE",
       transmission: "AUTOMATIQUE",
       image: "/images/cars2/DACIA.png",
       seats: 5,
       bags: 5,
       doors: 5,
-      price: 400,
-      features: ["4x4", "Automatique", "GPS", "Tout-terrain"]
+      price: 300,
+      features: ["Confort", "Automatique", "GPS", "Économique"]
     }
   ]
 
   // Set mounted state and clear old booking data on initial load
   useEffect(() => {
     setIsMounted(true)
-    
+
     // Clear any old booking data from previous sessions
     // This ensures the card only shows when user submits in current session
     try {
@@ -201,19 +201,19 @@ const VehiclesSection = () => {
   // Load booking data from localStorage on component mount
   useEffect(() => {
     if (!isMounted) return
-    
+
     const loadBookingData = () => {
       try {
         const savedBookingData = localStorage.getItem('bookingData')
         if (savedBookingData) {
           const parsedData = JSON.parse(savedBookingData)
-          
+
           // Validate the parsed data
           if (parsedData.pickupDate && parsedData.returnDate && parsedData.location) {
             // Check if dates are valid
             const pickup = new Date(parsedData.pickupDate)
             const returnDate = new Date(parsedData.returnDate)
-            
+
             if (!isNaN(pickup.getTime()) && !isNaN(returnDate.getTime())) {
               setBookingData(parsedData)
               console.log('Booking data loaded:', parsedData)
@@ -234,25 +234,25 @@ const VehiclesSection = () => {
         setBookingData(null)
       }
     }
-    
+
     // Load initially
     loadBookingData()
-    
+
     // Listen for storage changes (from the hero section submission)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'bookingData') {
         loadBookingData()
       }
     }
-    
+
     // Listen for custom event (for same-window updates)
     const handleBookingUpdate = () => {
       loadBookingData()
     }
-    
+
     window.addEventListener('storage', handleStorageChange)
     window.addEventListener('bookingDataUpdated', handleBookingUpdate)
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange)
       window.removeEventListener('bookingDataUpdated', handleBookingUpdate)
@@ -260,32 +260,38 @@ const VehiclesSection = () => {
   }, [isMounted])
 
   const handleBooking = (vehicle: Vehicle) => {
-    setSelectedVehicle(vehicle)
-    setShowBookingModal(true)
+    if (bookingData) {
+      setSelectedVehicle(vehicle)
+      setShowBookingModal(true)
+    } else {
+      openWhatsApp(vehicle)
+    }
   }
 
   const calculateDays = (startDate: string, endDate: string): number => {
     // Validate inputs
     if (!startDate || !endDate) return 1
-    
+
     const start = new Date(startDate)
     const end = new Date(endDate)
-    
+
     // Check for invalid dates
     if (isNaN(start.getTime()) || isNaN(end.getTime())) return 1
-    
+
     // Calculate difference (end should be after start)
     const diffTime = end.getTime() - start.getTime()
-    
+
     // If dates are the same or end is before start, return 1
     if (diffTime <= 0) return 1
-    
+
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     return diffDays
   }
 
   const generateWhatsAppMessage = (vehicle: Vehicle) => {
-    if (!bookingData) return ''
+    if (!bookingData) {
+      return encodeURIComponent(vehicle.name)
+    }
 
     const days = calculateDays(bookingData.pickupDate, bookingData.returnDate)
     const totalPrice = vehicle.price * days
@@ -339,7 +345,7 @@ Pouvez-vous me confirmer la disponibilité?`
             {/* Decorative background elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-luxury-gold/10 rounded-full blur-xl"></div>
             <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-luxury-blue/10 rounded-full blur-xl"></div>
-            
+
             <div className="relative z-10 text-center">
               {/* Header with modern design */}
               <div className="flex items-center justify-center space-x-3 mb-6">
@@ -360,7 +366,7 @@ Pouvez-vous me confirmer la disponibilité?`
                   </p>
                 </div>
               </div>
-              
+
               {/* Booking details with modern cards */}
               <div className="space-y-3 mb-6">
                 <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
@@ -374,7 +380,7 @@ Pouvez-vous me confirmer la disponibilité?`
                     {calculateDays(bookingData.pickupDate, bookingData.returnDate)} jours
                   </span>
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100">
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-luxury-gold/20 rounded-lg flex items-center justify-center">
@@ -387,7 +393,7 @@ Pouvez-vous me confirmer la disponibilité?`
                   </span>
                 </div>
               </div>
-              
+
               {/* Modern call-to-action */}
               <div className="p-4 bg-gradient-to-r from-luxury-gold/10 to-luxury-blue/10 rounded-xl border border-luxury-gold/20">
                 <div className="flex items-center justify-center space-x-2">
@@ -415,7 +421,7 @@ Pouvez-vous me confirmer la disponibilité?`
           {vehicles.map((vehicle) => {
             const days = bookingData ? calculateDays(bookingData.pickupDate, bookingData.returnDate) : 1
             const totalPrice = vehicle.price * days
-            
+
             return (
               <div
                 key={vehicle.id}
@@ -435,7 +441,7 @@ Pouvez-vous me confirmer la disponibilité?`
                       quality={85}
                     />
                   </div>
-                  
+
                   {/* Price Tag */}
                   <div className="absolute top-3 md:top-4 right-3 md:right-4 bg-luxury-gold text-luxury-blue px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-bold z-20 shadow-lg">
                     {vehicle.price} MAD/JOUR
@@ -449,7 +455,7 @@ Pouvez-vous me confirmer la disponibilité?`
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-luxury-blue mb-3">
                       {vehicle.name}
                     </h3>
-                    
+
                     {/* Vehicle Tags - Secondary hierarchy */}
                     <div className="flex items-center space-x-2 mb-4">
                       <span className="bg-gray-100 px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
@@ -518,7 +524,7 @@ Pouvez-vous me confirmer la disponibilité?`
                         {bookingData ? `pour ${calculateDays(bookingData.pickupDate, bookingData.returnDate)} jours` : 'par jour TTC'}
                       </div>
                     </div>
-                    <button 
+                    <button
                       onClick={() => handleBooking(vehicle)}
                       className="px-6 py-3 bg-gradient-to-r from-luxury-gold to-yellow-400 text-luxury-blue font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 text-sm"
                     >

@@ -61,12 +61,12 @@ const HeroSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!isMounted) {
       console.error('Component not mounted yet')
       return
     }
-    
+
     if (!validateForm()) {
       return
     }
@@ -83,10 +83,10 @@ const HeroSection = () => {
 
       // Save to localStorage for vehicles section to access
       localStorage.setItem('bookingData', JSON.stringify(bookingData))
-      
+
       // Dispatch custom event to notify VehiclesSection in the same window
       window.dispatchEvent(new Event('bookingDataUpdated'))
-      
+
       console.log('Booking data saved:', bookingData)
 
       // Simulate processing time
@@ -97,7 +97,7 @@ const HeroSection = () => {
       // Smooth scroll to vehicles section
       const vehiclesSection = document.getElementById('vehicles')
       if (vehiclesSection) {
-        vehiclesSection.scrollIntoView({ 
+        vehiclesSection.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         })
@@ -159,7 +159,7 @@ const HeroSection = () => {
                 <span className="text-luxury-gold block">Premium</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-lg">
-                Découvrez notre flotte de véhicules de luxe à Laayoune. 
+                Découvrez notre flotte de véhicules de luxe à Laayoune.
                 Service premium, tarifs compétitifs.
               </p>
             </div>
@@ -181,7 +181,7 @@ const HeroSection = () => {
                 {/* Speech bubble tail */}
                 <div className="absolute -bottom-2 left-8 w-4 h-4 bg-luxury-gold transform rotate-45"></div>
               </div>
-              
+
               {/* Floating elements for visual interest */}
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-luxury-blue rounded-full flex items-center justify-center animate-bounce">
                 <Star className="w-3 h-3 text-luxury-gold fill-current" />
@@ -237,7 +237,7 @@ const HeroSection = () => {
             {/* Decorative elements */}
             <div className="absolute -top-2 -right-2 w-4 h-4 bg-luxury-gold rounded-full"></div>
             <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-luxury-blue rounded-full"></div>
-            
+
             <div className="space-y-4 md:space-y-6">
               <div className="text-center">
                 <h3 className="text-xl md:text-2xl font-bold text-luxury-blue mb-2">
@@ -255,13 +255,12 @@ const HeroSection = () => {
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-luxury-gold" />
                     <h4 className="font-semibold text-luxury-blue text-sm md:text-base">RETIRER</h4>
                   </div>
-                  
+
                   <select
                     value={location}
                     onChange={handleLocationChange}
-                    className={`w-full p-3 md:p-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                      errors.location ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full p-3 md:p-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${errors.location ? 'border-red-500' : 'border-gray-300'
+                      }`}
                   >
                     <option value="">Choisissez un bureau</option>
                     {locations.map((loc) => (
@@ -279,35 +278,33 @@ const HeroSection = () => {
                     <label className="text-xs md:text-sm font-medium text-gray-700">
                       Date du retrait
                     </label>
-                    <div className="relative">
+                    <div className="relative min-w-0">
                       <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
                       <input
                         type="date"
                         value={pickupDate}
                         onChange={handlePickupDateChange}
-                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                          errors.pickupDate ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`w-full max-w-full appearance-none pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${errors.pickupDate ? 'border-red-500' : 'border-gray-300'
+                          }`}
                       />
                     </div>
                     {errors.pickupDate && (
                       <p className="text-red-500 text-xs">{errors.pickupDate}</p>
                     )}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-xs md:text-sm font-medium text-gray-700">
                       Date de retour
                     </label>
-                    <div className="relative">
+                    <div className="relative min-w-0">
                       <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400" />
                       <input
                         type="date"
                         value={returnDate}
                         onChange={handleReturnDateChange}
-                        className={`w-full pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${
-                          errors.returnDate ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`w-full max-w-full appearance-none pl-10 md:pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-transparent text-sm md:text-base ${errors.returnDate ? 'border-red-500' : 'border-gray-300'
+                          }`}
                       />
                     </div>
                     {errors.returnDate && (
