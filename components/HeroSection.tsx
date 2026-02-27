@@ -154,13 +154,13 @@ const HeroSection = () => {
           <div className="text-white space-y-6 md:space-y-8">
             {/* Title and Description - Hidden on mobile */}
             <div className="hidden md:space-y-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight uppercase">
                 Location de Voiture
-                <span className="text-luxury-gold block">Premium</span>
+                <span className="text-luxury-gold block">Laayoune</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-200 max-w-lg">
-                Découvrez notre flotte de véhicules de luxe à Laayoune.
-                Service premium, tarifs compétitifs.
+                Réservez votre véhicule à Laayoune avec EUN CARS.
+                Service premium, tarifs compétitifs et livraison gratuite.
               </p>
             </div>
 

@@ -3,8 +3,8 @@ import { Suspense } from 'react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'EUN CARS - Location de Voitures au Maroc',
-  description: 'Location de voitures au Maroc. Large gamme de véhicules: citadines, SUV, berlines. Réservation facile et prix compétitifs.',
+  title: 'Agence Location Voiture Laayoune Pas Cher | EUNCARS Laayoune',
+  description: 'Réservez votre voiture à Laayoune avec EUN CARS. Large gamme de véhicules: citadines, SUV, berlines. Réservation facile et prix compétitifs.',
 }
 
 // Dynamic imports for better performance
@@ -38,23 +38,23 @@ export default function Home() {
       <Suspense fallback={<div className="fixed top-0 w-full h-16 bg-luxury-blue animate-pulse z-50" />}>
         <Header />
       </Suspense>
-      
+
       <Suspense fallback={<div className="h-screen bg-gradient-to-br from-luxury-blue to-luxury-gold animate-pulse" />}>
         <HeroSection />
       </Suspense>
-      
+
       <Suspense fallback={<div className="py-20 bg-white animate-pulse" />}>
         <ServicesSection />
       </Suspense>
-      
+
       <Suspense fallback={<div className="py-20 bg-gray-100 animate-pulse" />}>
         <VehiclesSection />
       </Suspense>
-      
+
       <Suspense fallback={<div className="py-20 bg-white animate-pulse" />}>
         <TestimonialsSection />
       </Suspense>
-      
+
       <Suspense fallback={<div className="bg-luxury-blue h-64 animate-pulse" />}>
         <Footer />
       </Suspense>

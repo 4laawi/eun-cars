@@ -5,15 +5,15 @@ import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact - EUN CARS',
-  description: 'Contactez EUN CARS pour la location de voitures au Maroc. Agence à Laâyoune, réservation par téléphone ou WhatsApp.',
+  title: 'Contact | Agence Location Voiture Laayoune Pas Cher | EUNCARS Laayoune',
+  description: 'Contactez EUN CARS pour la location de voitures à Laayoune. Réservation facile par téléphone ou WhatsApp pour vos déplacements au Maroc.',
 }
 
 const ContactPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <main className="pt-20 pb-16">
         <div className="container-custom">
           {/* Header */}
@@ -110,7 +110,7 @@ const ContactPage = () => {
                       placeholder="Votre nom complet"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Téléphone *
@@ -135,7 +135,7 @@ const ContactPage = () => {
                       placeholder="votre@email.com"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Bureau de préférence

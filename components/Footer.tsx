@@ -15,16 +15,16 @@ const Footer = () => {
                 <span className="text-luxury-blue font-bold text-lg">EC</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold">EUN CARS</h3>
-                <p className="text-sm text-gray-300">Location de Voiture</p>
+                <h3 className="text-xl font-bold">LOCATION DE VOITURE LAAYOUNE</h3>
+                <p className="text-sm text-gray-300">EUN CARS</p>
               </div>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold">
-                Eun Cars location de voiture Laayoune
+              <h4 className="text-lg font-semibold uppercase">
+                Location de voiture Laayoune - Eun Cars
               </h4>
               <p className="text-sm text-gray-300 leading-relaxed">
-                Votre partenaire de confiance pour la location de véhicules à Laayoune et dans toute la région. 
+                Votre partenaire de confiance pour la location de véhicules à Laayoune et dans toute la région.
                 Service premium, véhicules de qualité et tarifs compétitifs.
               </p>
             </div>
@@ -157,9 +157,9 @@ const Footer = () => {
             </div>
             <div className="text-sm text-gray-200">
               © {currentYear} Developed by{' '}
-              <a 
-                href="https://sitepro.ma" 
-                target="_blank" 
+              <a
+                href="https://sitepro.ma"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-luxury-gold hover:text-yellow-400 transition-colors"
               >
